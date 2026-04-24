@@ -1,0 +1,293 @@
+:root {
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 22px;
+
+    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
+
+    --font-display: 'Georgia', 'Times New Roman', serif;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    padding: 5rem 6rem;
+    background-color: var(--color--medium-blue);
+    min-height: 480px;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 520px;
+    color: var(--color--white);
+}
+
+.hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1.25rem;
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: 3.25rem;
+    font-weight: 400;
+    line-height: 1.12;
+    color: var(--color--white);
+    margin: 0 0 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-title em {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-subtitle {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+    max-width: 400px;
+}
+
+/* Featured Event Card */
+.featured-event-card {
+    width: 300px;
+    background: var(--color--white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: 0.18s ease;
+}
+
+.featured-event-card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.25rem 1.25rem 1rem;
+    background: var(--color--transparent-honors-yellow);
+}
+
+.featured-event-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color--black);
+}
+
+.featured-event-card-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--color--honors-yellow);
+    color: var(--color--black);
+    padding: 3px 8px;
+    border-radius: 20px;
+}
+
+.featured-event-card-body {
+    padding: 1.25rem;
+}
+
+.featured-event-card-meta {
+    font-size: 0.75rem;
+    color: var(--color--light-black);
+    margin-bottom: 1rem;
+}
+
+.featured-event-card-date-label {
+    font-size: 0.7rem;
+    color: var(--color--light-black);
+    margin-bottom: 0.25rem;
+}
+
+.featured-event-card-date {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color--black);
+}
+
+.featured-event-card-divider {
+    height: 1px;
+    background: var(--color--silver);
+    margin: 1rem 0;
+}
+
+.featured-event-card-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--color--light-black);
+}
+
+.featured-event-card-countdown {
+    font-weight: 600;
+    color: var(--color--honors-yellow);
+}
+
+/* Events Section */
+.events-section {
+    padding: 4rem 6rem;
+    background: var(--color--light-silver);
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+}
+
+.event-card-link, .featured-event-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Event Card */
+.event-card {
+    padding: 15px;
+    background: var(--color--white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: none;
+    box-shadow: var(--shadow-card);
+    height: 275px;
+    transition: 0.18s ease;
+}
+
+.event-card-description {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color--light-black);
+    max-height: 1em;
+    overflow: hidden;
+}
+
+.event-card:hover, .featured-event-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.event-card-body {
+    padding: 1.25rem;
+}
+
+.event-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color--black);
+    margin-bottom: 0.5rem;
+}
+
+.event-card-meta {
+    font-size: 0.75rem;
+    color: var(--color--light-black);
+    margin-bottom: 1rem;
+}
+
+.event-card-date-label {
+    font-size: 0.7rem;
+    color: var(--color--light-black);
+    margin-bottom: 0.25rem;
+}
+
+.event-card-date {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color--black);
+}
+
+.event-card-divider {
+    height: 1px;
+    background: var(--color--silver);
+    margin: 1rem 0;
+}
+
+.event-card-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--color--light-black);
+}
+
+.event-card-attendees strong {
+    color: var(--color--ozarks-blue);
+}
+
+.see-all-link {
+    min-height: 275px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.see-all-link > *:hover {
+    text-decoration: underline;
+}
+
+.see-all-link > * {
+    color: var(--color--ozarks-blue);
+    text-decoration: none;
+    font-size: 2em;
+    text-align: center;
+}
+
+/* card badges */
+.event-card-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-bottom: 3px;
+}
+
+.popular {
+    background: var(--color--luminous-vivid-orange);
+    color: var(--color--white);
+}
+
+.tech {
+    background: var(--color--vivid-green);
+    color: var(--color--white);
+}
+
+.rsvped {
+    background: var(--color--transparent-ozarks-blue);
+    color: var(--color--white);
+}
+
+.health,
+.social,
+.creative,
+.sports,
+.career,
+.chill,
+.fun,
+.impact,
+.food {
+  background: var(--color--ozarks-blue);
+  color: var(--color--white);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        padding: 3rem 1.5rem;
+    }
+
+    .featured-event-card {
+        width: 100%;
+        max-width: 340px;
+    }
+
+    .events-section {
+        padding: 3rem 1.5rem;
+    }
+}
+

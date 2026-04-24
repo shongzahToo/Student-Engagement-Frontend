@@ -1,0 +1,117 @@
+.events-page {
+  padding: 4rem 6rem;
+  background: var(--color--light-silver);
+  min-height: 100vh;
+}
+
+.events-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 2rem;
+}
+
+.events-page-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color--ozarks-blue);
+  margin-bottom: 0.75rem;
+}
+
+.events-page-title {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  font-weight: 400;
+  color: var(--color--black);
+  margin: 0 0 0.75rem;
+}
+
+.events-page-subtitle {
+  color: var(--color--light-black);
+  max-width: 520px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.events-toolbar {
+  display: grid;
+  grid-template-columns: 1fr 180px 180px auto;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.events-search,
+.events-select {
+  border: 1px solid var(--color--silver);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  font-size: 0.95rem;
+  background: var(--color--white);
+  color: var(--color--black);
+}
+
+.events-search:focus,
+.events-select:focus {
+  outline: 2px solid var(--color--transparent-ozarks-blue);
+  border-color: var(--color--ozarks-blue);
+}
+
+.events-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color--light-black);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.events-results-count {
+  margin-bottom: 1rem;
+  color: var(--color--light-black);
+  font-size: 0.9rem;
+}
+
+.events-empty {
+  background: var(--color--white);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  color: var(--color--light-black);
+  box-shadow: var(--shadow-card);
+}
+
+.event-card-description {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--color--light-black);
+  margin: 0 0 1rem;
+}
+
+.health,
+.social,
+.creative,
+.sports,
+.career,
+.chill,
+.fun,
+.impact,
+.food {
+  background: var(--color--ozarks-blue);
+  color: var(--color--white);
+}
+
+@media (max-width: 900px) {
+  .events-page {
+    padding: 3rem 1.5rem;
+  }
+
+  .events-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .events-page-title {
+    font-size: 2.25rem;
+  }
+}

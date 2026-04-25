@@ -15,6 +15,7 @@ function Events({ user, events }) {
     useEffect(() => {
         updateField(events.events, events.setEvents, setEventsLoading, getEvents);
     }, [events, events.events]);
+
     const tags = useMemo(() => {
         return ["All", ...new Set(events?.events?.map(event => event.tag))];
     }, [events.events]);
@@ -99,7 +100,6 @@ function Events({ user, events }) {
                     RSVP'd only
                 </label>
             </div>
-
             {eventsLoading ? (
                 <div className="events-empty">Loading events...</div>
             ) : filteredEvents?.length === 0 ? (

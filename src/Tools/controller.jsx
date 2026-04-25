@@ -10,7 +10,7 @@ async function getData(path) {
 
         return await response.json();
     } catch (error) {
-        console.error('Error fetching data:', error); you gonna be running it on the server so
+        console.error('Error fetching data:', error);
     }
 }
 

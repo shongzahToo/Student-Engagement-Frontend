@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { createEvent, getClubById, getEvents } from "../../Tools/MockAPI/FakeAPI.jsx";
-import { updateField } from "../../Tools/Updators/Updators.jsx";
+import { postCreateEvent, getClubById, getEvents } from "../../Tools/controller.jsx";
+import { updateField } from "../../Tools/Updator.jsx";
 import "./CreateEvent.css";
 
 function CreateEvent({ user, events }) {
@@ -15,13 +15,13 @@ function CreateEvent({ user, events }) {
     const [eventsLoading, setEventsLoading] = useState(false);
 
     const [formData, setFormData] = useState({
-        name: "test",
-        description: "test",
-        date: "1111-11-11",
-        time: "11:11",
-        location: "test",
-        tag: "social",
-        it: true,
+        name: "",
+        description: "",
+        date: "",
+        time: "",
+        location: "",
+        tag: "Social",
+        it: false,
         facilities: false,
         finance: false
     });
@@ -45,7 +45,7 @@ function CreateEvent({ user, events }) {
         loadClub();
     }, [id]);
 
-    const isAdmin = club?.admins?.map(a => a.id).includes(user?.user?.id);
+    const isAdmin = club?.users?.filter(u => u.admin).map(a => a.id).includes(user?.user?.id);
 
     function handleChange(e) {
         const { name, value, type, checked } = e.target;
@@ -72,29 +72,29 @@ function CreateEvent({ user, events }) {
 
         setSaving(true);
 
-        const newDate = new Date(`${formData.date}T${formData.time}:00`);
+        const newDate = new Date(`${formData.date}T${formData.time}`);
         try {
-            const newEvent = {
+            const eventInfo = {
                 name: formData.name,
-                dateTime: newDate,
+                description: formData.description,
                 location: formData.location,
-                club: club.name,
+                dateTime: newDate,
                 clubId: club.id,
                 tag: formData.tag,
-                it: Number(formData.it),
-                facilities: Number(formData.facilities),
-                finance: Number(formData.finance),
-                users: [],
-                id: events.events.length + 1
+                requirements: {
+                    it: formData.it,
+                    facilities: formData.facilities,
+                    finance: formData.finance
+                }
             };
 
-            await createEvent(newEvent);
+            const newEventId = await postCreateEvent(user?.user.id, eventInfo);
 
             if (events?.setEvents) {
-                events.setEvents(prev => [...(prev ?? []), newEvent]);
+                events.setEvents(prev => [...(prev ?? []), eventInfo]);
             }
 
-            navigate(`/events/${newEvent.id}`);
+            navigate(`/events/${newEventId}`);
         } catch {
             setError("Something went wrong while creating the event.");
         } finally {
@@ -206,7 +206,7 @@ function CreateEvent({ user, events }) {
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="tag">Category</label>
+                        <label htmlFor="tag">Tag</label>
                         <select
                             id="tag"
                             name="tag"

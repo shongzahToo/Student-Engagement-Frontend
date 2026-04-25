@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
-import { updateField } from "../../Tools/Updators/Updators.jsx";
+import { updateField } from "../../Tools/Updator.jsx";
 import formatDate from "../../Tools/FormatDate.jsx";
-import { getClubs, getEvents, getFeedbacks } from "../../Tools/MockAPI/FakeAPI";
-import "./Profile.css";
+import { getClubs, getEvents, getFeedbacks } from "../../Tools/controller.jsx";
 
+import "./Profile.css";
 function Profile({ user = null, events, clubs }) {
     const navigate = useNavigate();
     const [eventsLoading, setEventsLoading] = useState(events.events === null);
@@ -25,18 +25,17 @@ function Profile({ user = null, events, clubs }) {
 
     const userEvents = events?.events?.filter(event => event.users.map(u => u.id).includes(user.user.id));
     const userClubs = clubs?.clubs?.filter(club => club.users.map(u => u.id).includes(user.user.id));
-
     return (
         <div className="profile-layout">
             <div className="profile-main">
                 <div className="profile-top">
                     <div className="profile-info">
                         <div className="profile-avatar">
-                            {user.user.username.split(" ").slice(0, 2).map(word => word[0].toUpperCase()).join("")}
+                            {user?.user?.name?.split(" ").slice(0, 2).map(word => word[0].toUpperCase()).join("")}
                         </div>
 
                         <div className="profile-details">
-                            <div className="profile-username">{user.user.username}</div>
+                            <div className="profile-username">{user.user.name}</div>
                             <div className="profile-points">
                                 <span className="coin">🪙</span>
                                 {user.user.points} pts
@@ -78,7 +77,7 @@ function Profile({ user = null, events, clubs }) {
                 <div className="profile-events">
                     {eventsLoading ? (
                         <div className="profile-page">Loading Events...</div>
-                    ) : events.events.filter(e => e.status == 4).length === 0 ? (
+                    ) : userEvents.filter(e => e.status == 4).length === 0 ? (
                         <>
                             <h2>Previous Events</h2>
                             <p>You have no past events!</p>
@@ -86,14 +85,14 @@ function Profile({ user = null, events, clubs }) {
                     ) : (
                         <div className="profile-event-list">
                             <h2>Previous Events</h2>
-                            {events.events.filter(e => e.status == 4).map(event => (
+                            {userEvents.filter(e => e.status == 4).map(event => (
                                 <Link to={`/events/${event.id}`} key={event.id} className="profile-event-card">
                                     <div className="profile-event-name">{event.name}</div>
                                     <div className="profile-event-meta">
                                         {formatDate(event.dateTime)}
                                     </div>
 
-                                    <FeedbackStatus eventId={event.id} userId={user.user.id} />
+                                    {!user.admin ? <FeedbackStatus eventId={event.id} userId={user.user.id} /> : null}
                                 </Link>
                             ))}
                         </div>
@@ -111,7 +110,7 @@ function Profile({ user = null, events, clubs }) {
                             {userClubs.map(club => (
                                 <Link to={`/clubs/${club.id}`} key={club.id} className="profile-event-card">
                                     <div className="profile-event-name">{club.name}</div>
-                                    {club.admins.map(a => a.id).includes(user.user.id) ? <span className="profile-club-admin">Admin</span> : null}
+                                    {club?.users?.filter(u => u.admin).some(u => u.id == user.user.id) ? <span className="profile-club-admin">Admin</span> : null}
                                 </Link>
                             ))}
                         </div>
@@ -128,13 +127,14 @@ function Profile({ user = null, events, clubs }) {
 }
 
 function FeedbackStatus({ eventId, userId }) {
+
     const [feedbacks, setFeedbacks] = useState(null);
 
     useEffect(() => {
         let active = true;
 
         async function loadFeedbacks() {
-            const data = await getFeedbacks(eventId);
+            const data = await getFeedbacks(Number(eventId));
             if (active) {
                 setFeedbacks(data);
             }

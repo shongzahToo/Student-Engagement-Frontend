@@ -1,7 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import formatDate from "../../Tools/FormatDate";
-import { getClubById, requestToJoinClub, cancelJoinRequest, leaveClub, approveJoinRequest, denyJoinRequest, removeUserFromClub, promoteToAdmin, demoteFromAdmin } from "../../Tools/MockAPI/FakeAPI";
+import { approveUserJoinClub, userJoinClub, getClubById } from "../../Tools/controller.jsx";
 import "./ClubPage.css";
 
 function ClubPage({ user }) {
@@ -35,7 +35,7 @@ function ClubPage({ user }) {
     }
 
     const currentUser = user?.user;
-    const adminIds = club.admins.map(a => a.id);
+    const adminIds = club.users.filter(u => u.admin).map(a => a.id);
     const memberIds = club.users.map(u => u.id);
     const pendingIds = (club.pendingRequests ?? []).map(u => u.id);
 
@@ -45,70 +45,49 @@ function ClubPage({ user }) {
 
     async function handleJoin() {
         setActionBusy("self");
-        const updated = await requestToJoinClub(club.id, currentUser.id);
+        const updated = await userJoinClub(club.id, currentUser.id);
         setClub(updated);
         setActionBusy(null);
     }
 
     async function handleCancelRequest() {
         setActionBusy("self");
-        const updated = await cancelJoinRequest(club.id, currentUser.id);
+        const updated = await userJoinClub(club.id, currentUser.id);
         setClub(updated);
         setActionBusy(null);
     }
 
     async function handleLeave() {
         setActionBusy("self");
-        const updated = await leaveClub(club.id, currentUser.id);
+        const updated = await userJoinClub(club.id, currentUser.id);
         setClub(updated);
         setActionBusy(null);
     }
 
     async function handleApprove(userId) {
         setActionBusy(userId);
-        const updated = await approveJoinRequest(club.id, userId);
-        setClub(updated);
-        setActionBusy(null);
-    }
-
-    async function handleDeny(userId) {
-        setActionBusy(userId);
-        const updated = await denyJoinRequest(club.id, userId);
-        setClub(updated);
-        setActionBusy(null);
-    }
-
-    async function handlePromote(userId) {
-        setActionBusy(userId);
-        const updated = await promoteToAdmin(club.id, userId);
-        setClub(updated);
-        setActionBusy(null);
-    }
-
-    async function handleDemote(userId) {
-        setActionBusy(userId);
-        const updated = await demoteFromAdmin(club.id, userId);
+        const updated = await approveUserJoinClub(club.id, userId, user?.user.id);
         setClub(updated);
         setActionBusy(null);
     }
 
     async function handleRemove(userId) {
         setActionBusy(userId);
-        const updated = await removeUserFromClub(club.id, userId);
+        const updated = await userJoinClub(club.id, userId);
         setClub(updated);
         setActionBusy(null);
     }
 
     const sortMembers = members => {
         return [...members].sort((a, b) => {
-            if (memberSort === "name") return (a.username || a.name).localeCompare(b.username || b.name);
+            if (memberSort === "name") return (a.name || a.name).localeCompare(b.name || b.name);
             if (memberSort === "status") return (a.status || "Member").localeCompare(b.status || "Member");
             return (b.points || 0) - (a.points || 0);
         });
     };
 
-    const regularMembers = club.users.filter(u => !adminIds.includes(u.id));
-    const sortedMembers = [...sortMembers(club.admins), ...sortMembers(regularMembers)];
+    const regularMembers = club.users.filter(u => !u.admin);
+    const sortedMembers = [...sortMembers(club.users.filter(u => u.admin)), ...sortMembers(regularMembers)];
     const pendingRequests = club.pendingRequests ?? [];
 
     return (
@@ -178,12 +157,12 @@ function ClubPage({ user }) {
                             <div key={u.id} className="club-member-row pending-row">
                                 <div className="club-member-user">
                                     <div className="club-member-avatar">
-                                        {(u.username || u.name || "?")
+                                        {(u.name || "?")
                                             .split(" ").slice(0, 2)
                                             .map(w => w[0]?.toUpperCase()).join("")}
                                     </div>
                                     <div className="club-member-name">
-                                        {u.username || u.name || `User #${u.id}`}
+                                        {u.name || `User #${u.id}`}
                                     </div>
                                 </div>
                                 <div className="club-member-admin-actions">
@@ -193,13 +172,6 @@ function ClubPage({ user }) {
                                         onClick={() => handleApprove(u.id)}
                                     >
                                         {actionBusy === u.id ? "…" : "Admit"}
-                                    </button>
-                                    <button
-                                        className="admin-btn deny"
-                                        disabled={actionBusy === u.id}
-                                        onClick={() => handleDeny(u.id)}
-                                    >
-                                        {actionBusy === u.id ? "…" : "Deny"}
                                     </button>
                                 </div>
                             </div>
@@ -250,12 +222,12 @@ function ClubPage({ user }) {
 
                                     <div className="club-member-user">
                                         <div className="club-member-avatar">
-                                            {(member.username || member.name || "?")
+                                            {(member.name || member.name || "?")
                                                 .split(" ").slice(0, 2)
                                                 .map(w => w[0]?.toUpperCase()).join("")}
                                         </div>
                                         <div className="club-member-name">
-                                            {member.username || member.name}
+                                            {member.name || member.name}
                                             {isCurrentUser && <span className="you-label">You</span>}
                                             {memberIsAdmin && <span className="admin-label">Admin</span>}
                                         </div>
@@ -268,23 +240,6 @@ function ClubPage({ user }) {
 
                                     {isAdmin && !isCurrentUser && (
                                         <div className="club-member-admin-actions">
-                                            {memberIsAdmin ? (
-                                                <button
-                                                    className="admin-btn demote"
-                                                    disabled={actionBusy === member.id}
-                                                    onClick={() => handleDemote(member.id)}
-                                                >
-                                                    {actionBusy === member.id ? "…" : "Remove Admin"}
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    className="admin-btn promote"
-                                                    disabled={actionBusy === member.id}
-                                                    onClick={() => handlePromote(member.id)}
-                                                >
-                                                    {actionBusy === member.id ? "…" : "Make Admin"}
-                                                </button>
-                                            )}
                                             <button
                                                 className="admin-btn remove"
                                                 disabled={actionBusy === member.id}
@@ -346,7 +301,7 @@ function ClubPage({ user }) {
                                         <p>{formatDate(event.dateTime)}</p>
                                         <p>{event.location}</p>
                                         <span className="badge">{event.tag}</span>
-                                        <span className="badge">{['Draft', 'Submitted', 'Approved', 'Completed'][event.status]}</span>
+                                        <span className="badge">{['Draft', 'Submitted', 'Approved', 'live', 'Completed'][event.status]}</span>
                                     </Link>
                                 ))}
                             </div>

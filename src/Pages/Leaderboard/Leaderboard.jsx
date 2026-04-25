@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Leaderboard.css";
-import { updateField } from "../../Tools/Updators/Updators";
-import { getUsers } from "../../Tools/MockAPI/FakeAPI";
+import { updateField } from "../../Tools/Updator.jsx";
+import { getUsers } from "../../Tools/controller.jsx";
 
 function Leaderboard({ user, users }) {
     const [loading, setLoading] = useState(false);
@@ -28,18 +28,16 @@ function Leaderboard({ user, users }) {
                         <span>User</span>
                         <span>Points</span>
                     </div>
-
-                    {users.users?.map((leaderboardUser, index) => (
+                    {users.users?.sort((a, b) => b.points - a.points).map((leaderboardUser, index) => (
                         <div key={leaderboardUser.id} className={"leaderboard-row" + (user && leaderboardUser.id === user.id ? " current-user" : "")} >
                             <div className={"leaderboard-rank" + (index === 0 ? " first" : index === 1 ? " second" : index === 2 ? " third" : "")}>#{index + 1}</div>
-
                             <div className="leaderboard-user">
                                 <div className="leaderboard-avatar">
-                                    {leaderboardUser.username.split(" ").slice(0, 2).map(word => word[0]?.toUpperCase()).join("")}
+                                    {leaderboardUser?.name?.split(" ")?.slice(0, 2)?.map(word => word[0]?.toUpperCase()).join("")}
                                 </div>
                                 <div>
                                     <div className="leaderboard-name">
-                                        {leaderboardUser.username}
+                                        {leaderboardUser.name}
                                         {user && leaderboardUser.id === user.id ? (<span className="you-label">You</span>) : null}
                                     </div>
                                 </div>

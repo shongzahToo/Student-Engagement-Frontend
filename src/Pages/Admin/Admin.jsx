@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getEvents, getUsers, getClubs } from "../../Tools/MockAPI/FakeAPI.jsx";
+import { getEvents, getUsers, getClubs } from "../../Tools/controller.jsx";
 import formatDate from "../../Tools/FormatDate.jsx";
 import "./Admin.css";
-import { updateField } from "../../Tools/Updators/Updators.jsx";
+import { updateField } from "../../Tools/Updator.jsx";
 
-import { approveEvent } from "../../Tools/MockAPI/FakeAPI.jsx";
+import { approveEvent, getUserById } from "../../Tools/controller.jsx";
 
 function getResourceStatusLabel(status) {
     if (status === 0) return "Not needed";
@@ -23,12 +23,11 @@ function getResourceStatusClass(status) {
     return "warning";
 }
 
-function Admin({ events, clubs, users }) {
+function Admin({ events, clubs, users, user }) {
     const [activeTab, setActiveTab] = useState("events");
     const [eventsLoading, setEventsLoading] = useState(false)
     const [clubsLoading, setClubsLoading] = useState(false)
     const [usersLoading, setUsersLoading] = useState(false)
-
     const [eventSearch, setEventSearch] = useState("");
     const [clubSearch, setClubSearch] = useState("");
     const [userSearch, setUserSearch] = useState("");
@@ -49,8 +48,19 @@ function Admin({ events, clubs, users }) {
         updateField(users.users, users.setUsers, setUsersLoading, getUsers);
     }, [users, users.users]);
 
+    if(user.user) {
+        async () =>  {
+            const tempUser = await getUserById(user.user.id)
+            if(!tempUser || !tempUser.admin) {
+                navigation('/login')
+            }
+        }
+    } else {
+        navigation('/login')
+    }
+
     async function handleApproveEvent(eventId) {
-        const updatedEvent = await approveEvent(eventId);
+        const updatedEvent = await approveEvent(Number(user.user.id), eventId);
 
         events.seteEVents(prev =>
             prev.map(event =>
@@ -71,7 +81,7 @@ function Admin({ events, clubs, users }) {
 
             const matchesFilter =
                 eventFilter === "all" ||
-                (eventFilter === "pending" && event.status === 0) ||
+                (eventFilter === "pending" && event.status === 1) ||
                 (eventFilter === "facilities" && event.facilities === 1) ||
                 (eventFilter === "it" && event.it === 1) ||
                 (eventFilter === "finance" && event.finance === 1);
@@ -97,7 +107,7 @@ function Admin({ events, clubs, users }) {
             const searchValue = userSearch.toLowerCase();
 
             return (
-                user.username?.toLowerCase().includes(searchValue) ||
+                user.name?.toLowerCase().includes(searchValue) ||
                 user.type?.toLowerCase().includes(searchValue) ||
                 String(user.points ?? "").includes(searchValue)
             );
@@ -229,7 +239,7 @@ function Admin({ events, clubs, users }) {
                                             </td>
 
                                             <td>
-                                                {event.status === 0 ? (
+                                                {event.status === 1 ? (
                                                     <div className="admin-table-actions">
                                                         <button
                                                             className="admin-action approve"
@@ -267,7 +277,7 @@ function Admin({ events, clubs, users }) {
                         </div>
 
                         <div className="admin-results-count">
-                            Showing {filteredClubs.length} club{filteredClubs.length === 1 ? "" : "s"}
+                            Showing {filteredClubs?.length} club{filteredClubs?.length === 1 ? "" : "s"}
                         </div>
 
                         <div className="admin-table-wrapper">
@@ -288,7 +298,7 @@ function Admin({ events, clubs, users }) {
                                                 <div className="admin-table-title">{club.name}</div>
                                             </td>
                                             <td>{club.users?.length ?? 0}</td>
-                                            <td>{club.admins?.length ?? 0}</td>
+                                            <td>{club.users.filter(u => u.admin)?.length ?? 0}</td>
                                             <td>{club.events?.length ?? 0}</td>
                                         </tr>
                                     ))}
@@ -332,7 +342,7 @@ function Admin({ events, clubs, users }) {
                                     {filteredUsers.map(user => (
                                         <tr key={user.id}>
                                             <td>
-                                                <div className="admin-table-title">{user.username}</div>
+                                                <div className="admin-table-title">{user.name}</div>
                                             </td>
 
                                             <td>

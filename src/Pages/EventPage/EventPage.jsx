@@ -2,19 +2,18 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import formatDate from "../../Tools/FormatDate";
 import {
+    completeEvent,
+    approveEvent,
+    getFeedbacks,
+    submitFeedback,
+    publishEvent,
+    submitDraft,
+    rsvpToEvent,
     getEvent,
     getEvents,
-    rsvpToEvent,
-    cancelRsvpToEvent,
-    getClubs,
-    submitDraft,
-    goLive,
-    submitFeedback,
-    getFeedbacks,
-    approveEvent,
-    endEvent
-} from "../../Tools/MockAPI/FakeAPI";
-import { updateField } from "../../Tools/Updators/Updators";
+    getClubs
+} from '../../Tools/controller.jsx'
+import { updateField } from "../../Tools/Updator.jsx";
 import "./EventPage.css";
 
 
@@ -94,15 +93,12 @@ function EventPage({ user, events, clubs }) {
         const updateFeedbacks = async () => {
             setIsFeedbacksLoading(true);
             const data = await getFeedbacks(id);
-            setFeedbacks(data.feedbacks?.filter(f => f.eventId == id) ?? []);
+            setFeedbacks(data.filter(f => f.eventId == id) ?? []);
             setIsFeedbacksLoading(false);
         };
 
         updateFeedbacks();
     }, [id]);
-
-    console.log(event)
-
     if (isLoading) {
         return (
             <div className="event-page-not-found">
@@ -133,7 +129,6 @@ function EventPage({ user, events, clubs }) {
             null
         );
     };
-
     const myFeedback = !isAdmin
         ? eventFeedbacks.find(f => f.userId == user?.user?.id)
         : null;
@@ -161,7 +156,8 @@ function EventPage({ user, events, clubs }) {
             };
 
             setFeedbacks([...feedbacks, newFeedback]);
-            await submitFeedback(newFeedback);
+            console.log([newFeedback.userId, newFeedback.eventId, rating, description])
+            await submitFeedback(newFeedback.userId, newFeedback.eventId, rating, description);
         } catch {
             setSubmitError("Something went wrong. Please try again.");
         } finally {
@@ -204,7 +200,7 @@ function EventPage({ user, events, clubs }) {
                                             ...event,
                                             users: event.users.filter(u => u.id != user.user.id)
                                         });
-                                        const updatedEvent = await cancelRsvpToEvent(event.id, user.user.id);
+                                        const updatedEvent = await rsvpToEvent(event.id, user.user.id);
                                         setEvent(updatedEvent);
                                     }
 
@@ -228,7 +224,7 @@ function EventPage({ user, events, clubs }) {
                                 <span
                                     className="submit-button"
                                     onClick={async () => {
-                                        const updatedEvent = await submitDraft(id);
+                                        const updatedEvent = await submitDraft(id, user?.user.id);
                                         setEvent(updatedEvent);
                                     }}
                                 >
@@ -242,7 +238,7 @@ function EventPage({ user, events, clubs }) {
                                     <span
                                         className="submit-button"
                                         onClick={async () => {
-                                            const updatedEvent = await approveEvent(event.id, user.user.id);
+                                            const updatedEvent = await approveEvent(user.user.id, event.id);
                                             setEvent(updatedEvent);
                                         }}
                                     >
@@ -258,8 +254,7 @@ function EventPage({ user, events, clubs }) {
                                     <span
                                         className="submit-button"
                                         onClick={async () => {
-                                            console.log(event.id)
-                                            await goLive(event.id);
+                                            await publishEvent(user?.user.id, event.id);
 
                                             setEvent(prev => ({
                                                 ...prev,
@@ -286,7 +281,7 @@ function EventPage({ user, events, clubs }) {
                                 <span
                                     className="submit-button"
                                     onClick={async () => {
-                                        await endEvent(event.id);
+                                        await completeEvent(user?.user.id, event.id);
 
                                         setEvent(prev => ({
                                             ...prev,
@@ -322,7 +317,7 @@ function EventPage({ user, events, clubs }) {
                                     className={"rsvp-row " + (rsvpUser.id == user.user.id ? "current-user" : "")}
                                 >
                                     <div className="rsvp-avatar">
-                                        {rsvpUser?.username
+                                        {rsvpUser?.name
                                             ?.split(" ")
                                             .slice(0, 2)
                                             .map(word => word[0]?.toUpperCase())
@@ -331,7 +326,7 @@ function EventPage({ user, events, clubs }) {
 
                                     <div>
                                         <div className="rsvp-name">
-                                            {rsvpUser.id == user.user.id ? "You" : rsvpUser.username}
+                                            {rsvpUser.id == user.user.id ? "You" : rsvpUser.name}
                                         </div>
                                     </div>
 
@@ -369,7 +364,7 @@ function EventPage({ user, events, clubs }) {
                                         <li key={fb.id ?? index} className="feedback-row">
                                             <div className="feedback-row-top">
                                                 <div className="rsvp-avatar feedback-avatar">
-                                                    {author?.username
+                                                    {author?.name
                                                         ?.split(" ")
                                                         .slice(0, 2)
                                                         .map(w => w[0]?.toUpperCase())
@@ -377,7 +372,7 @@ function EventPage({ user, events, clubs }) {
                                                 </div>
 
                                                 <span className="feedback-author">
-                                                    {author?.username ?? `User ${fb.userId}`}
+                                                    {author?.name ?? `User ${fb.userId}`}
                                                 </span>
 
                                                 <StarRating value={fb.rating} readOnly />

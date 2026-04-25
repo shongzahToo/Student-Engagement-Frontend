@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUsers } from "../../Tools/MockAPI/FakeAPI";
-import { updateField } from "../../Tools/Updators/Updators.jsx";
+import { getUsers } from "../../Tools/controller.jsx"
+import { updateField } from "../../Tools/Updator.jsx";
 import "./Login.css";
 
 function Login({ users, setUser }) {
@@ -33,12 +33,12 @@ function Login({ users, setUser }) {
                   navigate("/");
                 }}>
                 <div className="user-select-avatar">
-                  {u.username.split(" ").slice(0, 2).map(word => word[0]?.toUpperCase()).join("")}
+                  {u.name.split(" ").slice(0, 2).map(word => word[0]?.toUpperCase()).join("")}
                 </div>
 
                 <div className="user-select-info">
-                  <div className="user-select-name">{u.username}</div>
-                  <div className="user-select-id">Test User #{u.id}</div>
+                  <div className="user-select-name">{u.name}</div>
+                  <div className="user-select-id">User Id #{u.id}</div>
                 </div>
 
                 <div className="user-select-points">

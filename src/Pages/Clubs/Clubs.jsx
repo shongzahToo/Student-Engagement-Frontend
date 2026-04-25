@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { updateField } from "../../Tools/Updators/Updators.jsx";
-import { getClubs } from "../../Tools/MockAPI/FakeAPI.jsx";
+import { updateField } from "../../Tools/Updator.jsx";
+import { getClubs } from "../../Tools/controller.jsx";
 import "./Clubs.css";
 import { Link } from "react-router-dom";
 
@@ -9,7 +9,7 @@ function formatClubs(clubsList, user) {
         ...club,
         memberCount: club.users.length,
         isMember: user ? club.users.map(u => u.id).includes(user?.id) : false,
-        isAdmin: user ? club.admins.map(a => a.id).includes(user?.id) : false
+        isAdmin: user ? club.users.filter(u => u.admin).map(a => a.id).includes(user?.id) : false
     }));
 }
 

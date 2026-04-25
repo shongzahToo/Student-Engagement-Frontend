@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Html5QrcodeScanner } from "html5-qrcode";
-
-import { checkUserIn } from "../../Tools/MockAPI/FakeAPI.jsx";
+import { userCheckin } from "../../Tools/controller.jsx";
 import "./ScanUsers.css";
 
-function ScanUsers() {
+function ScanUsers({user}) {
     const { id } = useParams();
     const scannerRef = useRef(null);
     const lastScanRef = useRef("");
@@ -43,7 +42,7 @@ function ScanUsers() {
                 setScanStatus("Checking user in...");
 
                 try {
-                    await checkUserIn(id, userId);
+                    await userCheckin(id, user.user.id, userId);
                     setScanStatus(`User ${userId} checked in successfully.`);
                 } catch (error) {
                     console.error(error);
@@ -68,7 +67,7 @@ function ScanUsers() {
         return () => {
             scanner.clear().catch(() => {});
         };
-    }, [id, isCheckingIn]);
+    }, [user.user.id, id, isCheckingIn]);
 
     return (
         <section className="scan-page">

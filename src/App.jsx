@@ -17,7 +17,9 @@ import ScanUsers from "./Pages/ScanUsers/ScanUsers.jsx";
 import Admin from "./Pages/Admin/Admin.jsx";
 
 function App() {
-  const [user, setUser] = useState({ id: 1, username: "Avery Johnson", points: 1280});
+
+  //data objects are used to avoid reloading and hitting the database when it isnt neccissary.
+  const [user, setUser] = useState(null);
   const [events, setEvents] = useState(null);
   const [users, setUsers] = useState(null);
   const [clubs, setClubs] = useState(null);
@@ -33,14 +35,14 @@ function App() {
         <Route path="/" element={ <Home user={userPassObject} events={eventsPassObject} /> } />
         <Route path="/events" element={ <Events user={userPassObject} events={eventsPassObject}/> } />
         <Route path="/events/:id" element={ <EventPage user={userPassObject} clubs={clubsPassObject} events={eventsPassObject}/> } />
-        <Route path="/events/:id/scan" element={ <ScanUsers/> } />
+        <Route path="/events/:id/scan" element={ <ScanUsers user={userPassObject}/> } />
         <Route path="/profile" element={ <Profile user={userPassObject} events={eventsPassObject} clubs={clubsPassObject}/> } />
         <Route path="/login" element={ <Login users={usersPassObject} setUser={setUser}/> } />
         <Route path="/leaderboard" element={<Leaderboard user={user} users={usersPassObject} />} />
         <Route path="/clubs" element={<Clubs clubs={clubsPassObject} user={userPassObject} />} />
         <Route path="/clubs/:id" element={ <ClubPage user={userPassObject} clubs={clubsPassObject} /> } />
         <Route path="/clubs/:id/create-event" element={ <CreateEvent user={userPassObject} clubs={clubsPassObject} events={eventsPassObject}/> } />
-        <Route path="/admin" element={<Admin events={eventsPassObject} clubs={clubsPassObject} users={usersPassObject} />} />
+        <Route path="/admin" element={<Admin events={eventsPassObject} clubs={clubsPassObject} users={usersPassObject} user={userPassObject}/>} />
       </Routes>
     </>
   );

@@ -59,7 +59,7 @@ function Navbar ({ user }) {
                 )}
 
                 <Link to="/profile" className="profile-btn">
-                  <div className="avatar">{getInitials(user.username)}</div>
+                  <div className="avatar">{getInitials(user.name)}</div>
                   My Profile
                 </Link>
               </>
@@ -95,7 +95,7 @@ function Navbar ({ user }) {
                 )}
 
                 <Link to="/profile" className="profile-btn" onClick={close}>
-                  <div className="avatar">{getInitials(user.username)}</div>
+                  <div className="avatar">{getInitials(user.name)}</div>
                   My Profile
                 </Link>
               </>

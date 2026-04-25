@@ -124,6 +124,10 @@
     color: var(--color--light-black);
 }
 
+.featured-event-card-footer > span {
+    max-width: 150px;
+}
+
 .featured-event-card-countdown {
     font-weight: 600;
     color: var(--color--honors-yellow);

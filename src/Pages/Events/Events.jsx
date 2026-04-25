@@ -1,17 +1,9 @@
 import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { updateField } from "../../Tools/Updators/Updators";
-import { getEvents } from "../../Tools/MockAPI/FakeAPI";
+import { updateField } from "../../Tools/Updator.jsx";
+import { getEvents } from "../../Tools/controller.jsx";
 import formatDate from "../../Tools/FormatDate";
 import "./Events.css";
-
-function formatEvents(events, user) {
-    return events.filter(e => e.status == 3).map(event => ({
-        ...event,
-        attendees: event.users.length,
-        rsvped: user.user ? event.users.some(u => u.id === user.user.id) : false
-    }));
-}
 
 function Events({ user, events }) {
     const [eventsLoading, setEventsLoading] = useState(false);
@@ -23,20 +15,14 @@ function Events({ user, events }) {
     useEffect(() => {
         updateField(events.events, events.setEvents, setEventsLoading, getEvents);
     }, [events, events.events]);
-
-    const formattedEvents = useMemo(
-        () => formatEvents(events?.events ?? [], user),
-        [events.events, user]
-    );
-
     const tags = useMemo(() => {
-        return ["All", ...new Set(formattedEvents.map(event => event.tag))];
-    }, [formattedEvents]);
+        return ["All", ...new Set(events?.events?.map(event => event.tag))];
+    }, [events.events]);
 
     const filteredEvents = useMemo(() => {
         const normalizedSearch = search.toLowerCase().trim();
-        return formattedEvents
-            .filter(event => {
+        return events?.events?.filter(event => {
+                if(event.status != 3) { return;}
                 const matchesSearch =
                     event.name.toLowerCase().includes(normalizedSearch) ||
                     event.description.toLowerCase().includes(normalizedSearch) ||
@@ -45,7 +31,7 @@ function Events({ user, events }) {
                     event.tag.toLowerCase().includes(normalizedSearch);
 
                 const matchesTag = selectedTag === "All" || event.tag === selectedTag;
-                const matchesRsvp = !showRsvpedOnly || event.rsvped;
+                const matchesRsvp = !showRsvpedOnly || event.users.map(u => u.id == user?.user?.id);
 
                 return matchesSearch && matchesTag && matchesRsvp;
             })
@@ -58,7 +44,7 @@ function Events({ user, events }) {
                 if (sortBy === "club-asc") return a.club.localeCompare(b.club);
                 return 0;
             });
-    }, [formattedEvents, search, selectedTag, sortBy, showRsvpedOnly]);
+    }, [events.events, search, selectedTag, sortBy, showRsvpedOnly]);
 
     return (
         <section className="events-page">
@@ -116,16 +102,16 @@ function Events({ user, events }) {
 
             {eventsLoading ? (
                 <div className="events-empty">Loading events...</div>
-            ) : filteredEvents.length === 0 ? (
+            ) : filteredEvents?.length === 0 ? (
                 <div className="events-empty">No events match your filters.</div>
             ) : (
                 <>
                     <div className="events-results-count">
-                        Showing {filteredEvents.length} event{filteredEvents.length === 1 ? "" : "s"}
+                        Showing {filteredEvents?.length} event{filteredEvents?.length === 1 ? "" : "s"}
                     </div>
 
                     <div className="events-grid">
-                        {filteredEvents.map(event => (
+                        {filteredEvents?.map(event => (
                             <Link key={event.id} to={`/events/${event.id}`} className="event-card-link">
                                 <div className="event-card">
                                     <div className="event-card-header">
@@ -133,7 +119,7 @@ function Events({ user, events }) {
                                         <div className={"event-card-badge " + event.tag.toLowerCase()}>
                                             {event.tag}
                                         </div>
-                                        {event.rsvped && <div className="event-card-badge rsvped">RSVPed</div>}
+                                        {event?.users?.map(u => u.id).includes(u => u.id == user?.user?.id) ? <div className="event-card-badge rsvped">RSVPed</div>: null}
                                     </div>
 
                                     <div className="event-card-body">
@@ -143,7 +129,7 @@ function Events({ user, events }) {
 
                                         <div className="event-card-date-label">Date & Time</div>
                                         <div className="event-card-date">
-                                            {formatDate(event?.dateTime)}
+                                            {event?.dateTime !== null ? formatDate(event?.dateTime) : ""}
                                         </div>
 
                                         <div className="event-card-divider" />

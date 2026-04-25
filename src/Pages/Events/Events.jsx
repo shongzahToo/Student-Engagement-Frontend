@@ -5,7 +5,7 @@ import { getEvents } from "../../Tools/MockAPI/FakeAPI";
 import "./Events.css";
 
 function formatEvents(events, user) {
-    return events.map(event => ({
+    return events.filter(e => e.stage == 3).map(event => ({
         ...event,
         attendees: event.users.length,
         rsvped: user.user ? event.users.includes(user.user.id) : false
@@ -24,8 +24,8 @@ function Events({ user, events }) {
     const [showRsvpedOnly, setShowRsvpedOnly] = useState(false);
 
     useEffect(() => {
-            updateField(events.events, events.setEvents, setEventsLoading, getEvents);
-        }, [events, events.events]);
+        updateField(events.events, events.setEvents, setEventsLoading, getEvents);
+    }, [events, events.events]);
 
     const formattedEvents = useMemo(
         () => formatEvents(events?.events ?? [], user),

@@ -156,6 +156,129 @@ input:checked + .slider:before { transform: translateX(26px); }
     text-align: center;
 }
 
+/* Admin Panel */
+.admin-event-panel {
+    margin: 2rem 0 0;
+    padding: 1.5rem;
+    background: var(--color--light-silver);
+    border-radius: var(--radius-xl);
+}
+
+.admin-event-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.admin-event-panel h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--color--black);
+    margin-bottom: 0;
+}
+
+.admin-event-panel h3 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color--light-black);
+    margin-bottom: 0.75rem;
+}
+
+.scan-link-button, .submit-button, .badge {
+    display: inline-block;
+    background: var(--color--ozarks-blue);
+    color: var(--color--white) !important;
+    text-decoration: none !important;
+    padding: 0.6rem 1.1rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0 !important;
+    margin-left: 5px;
+    transition: 0.18s ease;
+    white-space: nowrap;
+}
+
+.submit-button, .scan-link-button {
+    cursor: pointer;
+}
+
+.current-user {
+  background: var(--color--transparent-ozarks-blue);
+}
+
+.scan-link-button:hover, .submit-button:hover {
+    background: var(--color--deep-blue);
+    transform: translateY(-2px);
+    text-decoration: none !important;
+}
+
+/* RSVP List — styled like Leaderboard rows */
+.rsvp-list {
+    list-style: none;
+    background: var(--color--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+}
+
+.rsvp-row {
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--color--silver);
+}
+
+.rsvp-row:last-child {
+    border-bottom: none;
+}
+
+/* Override the grid to: avatar | name | points */
+.rsvp-row {
+    grid-template-columns: 38px 1fr 120px;
+}
+
+.rsvp-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5cffb1 0%, #00c4ff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #0b0f1a;
+    flex-shrink: 0;
+}
+
+.rsvp-name {
+    font-weight: 700;
+    color: var(--color--black);
+    font-size: 0.95rem;
+}
+
+.rsvp-points {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.4rem;
+    color: #b88900;
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+
+.rsvp-points .coin {
+    font-size: 1rem;
+}
+
 @media (max-width: 768px) {
     .event-page {
         margin: 2rem 1.5rem;
@@ -164,5 +287,19 @@ input:checked + .slider:before { transform: translateX(26px); }
 
     .event-page h1 {
         font-size: 2.25rem;
+    }
+
+    .admin-event-panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .rsvp-row {
+        grid-template-columns: 38px 1fr;
+    }
+
+    .rsvp-points {
+        grid-column: 2;
+        justify-content: flex-start;
     }
 }

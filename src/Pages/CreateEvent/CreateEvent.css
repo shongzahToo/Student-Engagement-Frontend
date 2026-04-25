@@ -1,0 +1,193 @@
+.create-event-page {
+    max-width: 850px;
+    margin: 4rem auto;
+    padding: 2.5rem;
+    background: var(--color--white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+}
+
+.create-event-back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    color: var(--color--ozarks-blue);
+    text-decoration: none;
+}
+
+.create-event-back-link:hover {
+    text-decoration: underline;
+}
+
+.create-event-header {
+    margin-bottom: 2rem;
+}
+
+.create-event-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color--ozarks-blue);
+    margin-bottom: 0.75rem;
+}
+
+.create-event-page h1 {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--color--black);
+    margin-bottom: 1rem;
+}
+
+.create-event-page p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color--light-black);
+}
+
+.create-event-page strong {
+    color: var(--color--ozarks-blue);
+}
+
+.create-event-form {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--color--ozarks-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color--silver);
+    border-radius: var(--radius-md);
+    background: var(--color--white);
+    color: var(--color--light-black);
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 130px;
+    line-height: 1.6;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color--ozarks-blue);
+    box-shadow: 0 0 0 3px rgba(0, 68, 123, 0.15);
+}
+
+.create-event-error {
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    background: #fff0f0;
+    color: var(--color--vivid-red);
+    font-weight: 700;
+}
+
+.create-event-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.cancel-event-button,
+.submit-event-button {
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.18s ease;
+}
+
+.cancel-event-button {
+    border: 1px solid var(--color--silver);
+    background: var(--color--white);
+    color: var(--color--light-black);
+}
+
+.submit-event-button {
+    border: 1px solid var(--color--ozarks-blue);
+    background: var(--color--ozarks-blue);
+    color: var(--color--white);
+}
+
+.cancel-event-button:hover,
+.submit-event-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.submit-event-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.create-event-message {
+    text-align: center;
+}
+
+.create-event-message a {
+    display: inline-block;
+    margin-top: 1rem;
+    color: var(--color--ozarks-blue);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .create-event-page {
+        margin: 2rem 1.5rem;
+        padding: 1.75rem;
+    }
+
+    .create-event-page h1 {
+        font-size: 2.25rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .create-event-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .cancel-event-button,
+    .submit-event-button {
+        text-align: center;
+        width: 100%;
+    }
+}

@@ -1,0 +1,140 @@
+.clubs-hero {
+    display: flex;
+    align-items: center;
+    padding: 5rem 6rem;
+    background-color: var(--color--medium-blue);
+    min-height: 360px;
+}
+
+.clubs-hero-content {
+    max-width: 560px;
+    color: var(--color--white);
+}
+
+.clubs-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 1.25rem;
+}
+
+.clubs-title {
+    font-family: var(--font-display);
+    font-size: 3.25rem;
+    font-weight: 400;
+    line-height: 1.12;
+    color: var(--color--white);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.clubs-title em {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.clubs-subtitle {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.65);
+    max-width: 430px;
+}
+
+.clubs-section {
+    padding: 4rem 6rem;
+    background: var(--color--light-silver);
+}
+
+.clubs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+}
+
+.club-card {
+    min-height: 185px;
+    padding: 1.5rem;
+    background: var(--color--white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    transition: 0.18s ease;
+    text-decoration: none;
+}
+
+.club-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.club-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.club-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color--black);
+    line-height: 1.35;
+}
+
+.club-badge {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.admin {
+    background: var(--color--transparent-honors-yellow);
+    color: var(--color--black);
+}
+
+.member {
+    background: var(--color--transparent-ozarks-blue);
+    color: var(--color--white);
+}
+
+.club-card-divider {
+    height: 1px;
+    background: var(--color--silver);
+    margin: 1.25rem 0;
+}
+
+.club-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--color--light-black);
+}
+
+.club-card-footer strong {
+    font-size: 1.25rem;
+    color: var(--color--ozarks-blue);
+}
+
+.clubs-loading {
+    color: var(--color--light-black);
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .clubs-hero {
+        padding: 3rem 1.5rem;
+    }
+
+    .clubs-section {
+        padding: 3rem 1.5rem;
+    }
+
+    .clubs-title {
+        font-size: 2.5rem;
+    }
+}

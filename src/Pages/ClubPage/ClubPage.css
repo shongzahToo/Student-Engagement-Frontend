@@ -1,0 +1,311 @@
+.club-page {
+    max-width: 850px;
+    margin: 4rem auto;
+    padding: 2.5rem;
+    background: var(--color--white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    position: relative;
+}
+
+.club-page a {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.club-page h1 {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--color--black);
+    margin-bottom: 1rem;
+}
+
+.club-page h2 {
+    font-size: 1.5rem;
+    color: var(--color--black);
+    margin: 1rem 0 1rem;
+}
+
+.club-page h3 {
+    color: var(--color--ozarks-blue);
+    margin-bottom: 0.5rem;
+}
+
+.club-page p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color--light-black);
+    margin-bottom: 0.9rem;
+}
+
+.club-page p:first-of-type {
+    font-size: 1.05rem;
+    color: var(--color--light-black);
+    margin-bottom: 1.5rem;
+}
+
+.club-page strong {
+    color: var(--color--ozarks-blue);
+    font-weight: 700;
+}
+
+.club-members-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0 1rem;
+}
+
+.club-members-header h2 {
+    margin: 0;
+}
+
+.club-sort-select {
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--color--silver);
+    border-radius: var(--radius-md);
+    background: var(--color--white);
+    color: var(--color--light-black);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.club-member-card {
+    background: var(--color--white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+}
+
+.club-member-list-header,
+.club-member-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 150px;
+    align-items: center;
+    gap: 1rem;
+}
+
+.club-member-list-header {
+    padding: 1rem 1.5rem;
+    background: var(--color--ozarks-blue);
+    color: var(--color--white);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.club-member-row {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--color--silver);
+}
+
+.club-member-row:last-child {
+    border-bottom: none;
+}
+
+.club-member-row.current-user {
+    background: var(--color--transparent-ozarks-blue);
+}
+
+.club-member-row.admin-user {
+    background: #fff8dc;
+}
+
+.club-member-status {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--color--ozarks-blue);
+    text-transform: uppercase;
+}
+
+.club-member-user {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.club-member-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5cffb1 0%, #00c4ff 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #0b0f1a;
+    flex-shrink: 0;
+}
+
+.club-member-name {
+    font-weight: 700;
+    color: var(--color--black);
+}
+
+.you-label,
+.admin-label {
+    margin-left: 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 20px;
+}
+
+.you-label {
+    background: var(--color--honors-yellow);
+    color: var(--color--black);
+}
+
+.admin-label {
+    background: var(--color--ozarks-blue);
+    color: var(--color--white);
+}
+
+.club-member-points {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.4rem;
+    color: #b88900;
+    font-weight: 800;
+}
+
+.club-member-points .coin {
+    font-size: 1rem;
+}
+
+.members-private {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--color--light-silver);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+}
+
+.events-header-section {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.create-event-button {
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--color--ozarks-blue);
+    border-radius: var(--radius-md);
+    background: var(--color--ozarks-blue);
+    color: var(--color--white);
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(15px);
+}
+
+.create-event-button:hover {
+    transform: translateY(13px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.event-list {
+    display: grid;
+    gap: 1rem;
+    margin-top: .9rem;
+}
+
+.event-card {
+    display: block;
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--color--light-silver);
+    color: var(--color--light-black);
+    text-decoration: none;
+}
+
+.event-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.event-card h3 {
+    color: var(--color--ozarks-blue);
+}
+
+.event-card p {
+    margin-bottom: 0.4rem;
+}
+
+.club-page .badge {
+    display: inline-block;
+    margin-top: 1rem;
+    margin-right: 5px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: var(--color--ozarks-blue);
+    color: var(--color--white);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.club-page-not-found {
+    max-width: 600px;
+    margin: 5rem auto;
+    padding: 2.5rem;
+    text-align: center;
+    background: var(--color--white);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+}
+
+.club-page-not-found h2 {
+    margin-bottom: 1rem;
+    color: var(--color--black);
+}
+
+.club-page-not-found a {
+    color: var(--color--ozarks-blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.club-page-not-found a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .club-page {
+        margin: 2rem 1.5rem;
+        padding: 1.75rem;
+    }
+
+    .club-page h1 {
+        font-size: 2.25rem;
+    }
+
+    .club-members-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .club-sort-select {
+        width: 100%;
+    }
+
+    .club-member-list-header {
+        display: none;
+    }
+
+    .club-member-row {
+        grid-template-columns: 1fr;
+    }
+
+    .club-member-points {
+        justify-content: flex-start;
+    }
+}

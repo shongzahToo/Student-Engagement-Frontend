@@ -1,4 +1,4 @@
-export const fakeApiUsers = [
+export let fakeApiUsers = [
   { id: 1, username: "Avery Johnson", points: 1280 },
   { id: 2, username: "Mia Thompson", points: 1135 },
   { id: 3, username: "Noah Williams", points: 1040 },
@@ -31,176 +31,190 @@ export const fakeApiUsers = [
   { id: 30, username: "Ella Scott", points: 100 }
 ];
 
-export const fakeApiEvents = [
-    {
-        id: 1,
-        name: "Welcome Week Kickoff",
-        description: "Join us for the biggest event of the semester! Free food, games, and a chance to meet your classmates.",
-        club: "Student Government",
-        date: "Sept 5",
-        time: "3:00 PM",
-        location: "Main Quad",
-        tag: "Popular",
-        users: [1, 2, 3, 4, 5]
-    },
-    {
-        id: 2,
-        name: "Photography Walk",
-        description: "Explore campus and take photos together.",
-        club: "Photography Club",
-        date: "Sept 20",
-        time: "4:00 PM",
-        location: "Campus Grounds",
-        tag: "Creative",
-        users: [13, 25]
-    },
-    {
-        id: 3,
-        name: "Yoga in the Park",
-        description: "Relax and unwind with a guided yoga session.",
-        club: "Wellness Club",
-        date: "Sept 8",
-        time: "8:00 AM",
-        location: "City Park",
-        tag: "Health",
-        users: [3, 8, 9]
-    },
-    {
-        id: 4,
-        name: "Movie Night",
-        description: "Enjoy a classic movie with popcorn and friends.",
-        club: "Film Society",
-        date: "Sept 9",
-        time: "8:00 PM",
-        location: "Student Center Theater",
-        tag: "Social",
-        users: [1, 4, 10]
-    },
-    {
-        id: 5,
-        name: "Hackathon 2026",
-        description: "24-hour coding competition with prizes.",
-        club: "Coding Club",
-        date: "Sept 12",
-        time: "10:00 AM",
-        location: "Innovation Lab",
-        tag: "Popular",
-        users: [5, 6, 7, 11]
-    },
-    {
-        id: 6,
-        name: "Art Workshop",
-        description: "Learn watercolor techniques from a local artist.",
-        club: "Art Club",
-        date: "Sept 10",
-        time: "2:00 PM",
-        location: "Art Studio",
-        tag: "Creative",
-        users: [8, 12]
-    },
-    {
-        id: 7,
-        name: "Basketball Tournament",
-        description: "3v3 tournament with prizes for winners.",
-        club: "Sports Club",
-        date: "Sept 11",
-        time: "1:00 PM",
-        location: "Gymnasium",
-        tag: "Sports",
-        users: [2, 9, 13]
-    },
-    {
-        id: 8,
-        name: "Networking Night",
-        description: "Meet professionals and expand your network.",
-        club: "Business Club",
-        date: "Sept 13",
-        time: "5:00 PM",
-        location: "Conference Hall",
-        tag: "Career",
-        users: [6, 14, 15]
-    },
-    {
-        id: 9,
-        name: "Book Club Meeting",
-        description: "Discuss this month’s book selection.",
-        club: "Literature Club",
-        date: "Sept 14",
-        time: "4:00 PM",
-        location: "Library Room 2",
-        tag: "Chill",
-        users: [7, 16]
-    },
-    {
-        id: 10,
-        name: "Open Mic Night",
-        description: "Showcase your talent—music, poetry, comedy!",
-        club: "Performing Arts",
-        date: "Sept 15",
-        time: "7:00 PM",
-        location: "Student Lounge",
-        tag: "Fun",
-        users: [3, 17, 18]
-    },
-    {
-        id: 11,
-        name: "Volunteer Day",
-        description: "Give back to the community with us.",
-        club: "Community Service Club",
-        date: "Sept 16",
-        time: "9:00 AM",
-        location: "Downtown Center",
-        tag: "Impact",
-        users: [4, 19]
-    },
-    {
-        id: 12,
-        name: "Gaming Tournament",
-        description: "Compete in popular games and win prizes.",
-        club: "Gaming Club",
-        date: "Sept 17",
-        time: "6:00 PM",
-        location: "Esports Arena",
-        tag: "Popular",
-        users: [10, 20, 21]
-    },
-    {
-        id: 13,
-        name: "Cooking Class",
-        description: "Learn to cook quick and healthy meals.",
-        club: "Culinary Club",
-        date: "Sept 18",
-        time: "5:30 PM",
-        location: "Kitchen Lab",
-        tag: "Food",
-        users: [11, 22]
-    },
-    {
-        id: 14,
-        name: "Startup Pitch Night",
-        description: "Pitch your startup idea and get feedback.",
-        club: "Entrepreneur Club",
-        date: "Sept 19",
-        time: "6:30 PM",
-        location: "Business Center",
-        tag: "Career",
-        users: [12, 23, 24]
-    }
+export let fakeApiEvents = [
+  {
+    id: 1,
+    name: "Welcome Week Kickoff",
+    description: "Join us for the biggest event of the semester! Free food, games, and a chance to meet your classmates.",
+    clubId: 14,
+    date: "Sept 5",
+    time: "3:00 PM",
+    location: "Main Quad",
+    tag: "Popular",
+    users: [1, 2, 3, 4, 5],
+    stage: 0
+  },
+  {
+    id: 2,
+    name: "Photography Walk",
+    description: "Explore campus and take photos together.",
+    clubId: 1,
+    date: "Sept 20",
+    time: "4:00 PM",
+    location: "Campus Grounds",
+    tag: "Creative",
+    users: [13, 25],
+    stage: 3
+  },
+  {
+    id: 3,
+    name: "Yoga in the Park",
+    description: "Relax and unwind with a guided yoga session.",
+    clubId: 13,
+    date: "Sept 8",
+    time: "8:00 AM",
+    location: "City Park",
+    tag: "Health",
+    users: [3, 8, 9],
+    stage: 2
+  },
+  {
+    id: 4,
+    name: "Movie Night",
+    description: "Enjoy a classic movie with popcorn and friends.",
+    clubId: 12,
+    date: "Sept 9",
+    time: "8:00 PM",
+    location: "Student Center Theater",
+    tag: "Social",
+    users: [1, 4, 10],
+    stage: 3
+  },
+  {
+    id: 5,
+    name: "Hackathon 2026",
+    description: "24-hour coding competition with prizes.",
+    clubId: 2,
+    date: "Sept 12",
+    time: "10:00 AM",
+    location: "Innovation Lab",
+    tag: "Popular",
+    users: [5, 6, 7, 11],
+    stage: 3
+  },
+  {
+    id: 6,
+    name: "Art Workshop",
+    description: "Learn watercolor techniques from a local artist.",
+    clubId: 3,
+    date: "Sept 10",
+    time: "2:00 PM",
+    location: "Art Studio",
+    tag: "Creative",
+    users: [8, 12],
+    stage: 3
+  },
+  {
+    id: 7,
+    name: "Basketball Tournament",
+    description: "3v3 tournament with prizes for winners.",
+    clubId: 4,
+    date: "Sept 11",
+    time: "1:00 PM",
+    location: "Gymnasium",
+    tag: "Sports",
+    users: [2, 9, 13],
+    stage: 3
+  },
+  {
+    id: 8,
+    name: "Networking Night",
+    description: "Meet professionals and expand your network.",
+    clubId: 5,
+    date: "Sept 13",
+    time: "5:00 PM",
+    location: "Conference Hall",
+    tag: "Career",
+    users: [6, 14, 15],
+    stage: 3
+  },
+  {
+    id: 9,
+    name: "Book Club Meeting",
+    description: "Discuss this month’s book selection.",
+    clubId: 6,
+    date: "Sept 14",
+    time: "4:00 PM",
+    location: "Library Room 2",
+    tag: "Chill",
+    users: [7, 16],
+    stage: 3
+  },
+  {
+    id: 10,
+    name: "Open Mic Night",
+    description: "Showcase your talent—music, poetry, comedy!",
+    clubId: 7,
+    date: "Sept 15",
+    time: "7:00 PM",
+    location: "Student Lounge",
+    tag: "Fun",
+    users: [3, 17, 18],
+    stage: 3
+  },
+  {
+    id: 11,
+    name: "Volunteer Day",
+    description: "Give back to the community with us.",
+    clubId: 8,
+    date: "Sept 16",
+    time: "9:00 AM",
+    location: "Downtown Center",
+    tag: "Impact",
+    users: [4, 19],
+    stage: 3
+  },
+  {
+    id: 12,
+    name: "Gaming Tournament",
+    description: "Compete in popular games and win prizes.",
+    clubId: 9,
+    date: "Sept 17",
+    time: "6:00 PM",
+    location: "Esports Arena",
+    tag: "Popular",
+    users: [10, 20, 21],
+    stage: 4
+  },
+  {
+    id: 13,
+    name: "Cooking Class",
+    description: "Learn to cook quick and healthy meals.",
+    clubId: 10,
+    date: "Sept 18",
+    time: "5:30 PM",
+    location: "Kitchen Lab",
+    tag: "Food",
+    users: [11, 22],
+    stage: 3
+  },
+  {
+    id: 14,
+    name: "Startup Pitch Night",
+    description: "Pitch your startup idea and get feedback.",
+    clubId: 11,
+    date: "Sept 19",
+    time: "6:30 PM",
+    location: "Business Center",
+    tag: "Career",
+    users: [12, 23, 24],
+    stage: 3
+  }
 ];
 
-export const fakeApiGroups = [
-    { id: 1, name: "Photography Club" },
-    { id: 2, name: "Coding Club" },
-    { id: 3, name: "Art Club" },
-    { id: 4, name: "Sports Club" },
-    { id: 5, name: "Business Club" },
-    { id: 6, name: "Literature Club" },
-    { id: 7, name: "Performing Arts" },
-    { id: 8, name: "Community Service Club" },
-    { id: 9, name: "Gaming Club" },
-    { id: 10, name: "Culinary Club" },
-    { id: 11, name: "Entrepreneur Club" },
-    { id: 12, name: "Film Society" },
-    { id: 13, name: "Wellness Club" },
-    { id: 14, name: "Student Government" }
+export let fakeApiClubs = [
+  { id: 1, name: "Photography Club", users: [1, 4, 10], admins: [1], events: [2] },
+  { id: 2, name: "Coding Club", users: [1, 5, 6, 7, 11], admins: [5], events: [5] },
+  { id: 3, name: "Art Club", users: [1, 8, 12], admins: [8], events: [6] },
+  { id: 4, name: "Sports Club", users: [1, 2, 9, 13], admins: [2], events: [7] },
+  { id: 5, name: "Business Club", users: [1, 6, 14, 15], admins: [6], events: [8] },
+  { id: 6, name: "Literature Club", users: [1, 7, 16], admins: [7], events: [9] },
+  { id: 7, name: "Performing Arts", users: [1, 3, 17, 18], admins: [3], events: [10] },
+  { id: 8, name: "Community Service Club", users: [1, 4, 19], admins: [4], events: [11] },
+  { id: 9, name: "Gaming Club", users: [10, 20, 21], admins: [10], events: [12] },
+  { id: 10, name: "Culinary Club", users: [11, 22], admins: [11], events: [13] },
+  { id: 11, name: "Entrepreneur Club", users: [12, 23, 24], admins: [12], events: [14] },
+  { id: 12, name: "Film Society", users: [13, 25], admins: [13], events: [4] },
+  { id: 13, name: "Wellness Club", users: [14, 26], admins: [14], events: [3] },
+  { id: 14, name: "Student Government", users: [15, 27], admins: [15], events: [1] }
 ];

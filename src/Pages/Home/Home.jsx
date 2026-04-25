@@ -7,7 +7,7 @@ import FeaturedEventCard from "../../Components/HomeComponents/FeaturedEventCard
 import "./Home.css";
 
 function formatEvents(events, currentUser) {
-    return events.map(event => ({
+    return events.filter(event => event.stage == 3).map(event => ({
         ...event,
         attendees: event.users.length,
         rsvped: currentUser ? event.users.includes(currentUser.id) : false

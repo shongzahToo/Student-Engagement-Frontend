@@ -6,6 +6,7 @@ const NAV_LINKS = [
   {to: '/', label: 'Home'},
   {to: '/events', label: 'Events'},
   {to: '/leaderboard', label: 'Leaderboard'},
+  {to: '/clubs', label: 'Clubs'},
 ]
 
 function getInitials(name = '') {

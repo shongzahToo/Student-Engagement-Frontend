@@ -1,4 +1,4 @@
-let debug = true;
+let debug = false;
 let urlBase = debug ? "http://192.168.1.156:8080" : "https://otc.nyxerinys.dev/api";
 
 async function getData(path) {
@@ -10,7 +10,7 @@ async function getData(path) {
 
         return await response.json();
     } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error); you gonna be running it on the server so
     }
 }
 

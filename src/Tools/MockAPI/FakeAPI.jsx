@@ -138,9 +138,12 @@ export async function createEvent(eventData) {
     clubId: Number(eventData.clubId),
     dateTime: eventData.dateTime,
     location: eventData.location,
+    it: eventData.it,
+    facilities: eventData.facilities,
+    finance: eventData.finance,
     tag: eventData.tag,
-    users: eventData.users?.map(Number) ?? [],
-    stage: 0
+    users: [],
+    status: 0
   };
 
   fakeApiEvents.push(newEvent);
@@ -171,7 +174,7 @@ export async function goLive(eventId) {
 
   if (!event) return null;
 
-  event.status = 2;
+  event.status = 3;
 
   return { ...event, users: event.users.map(u => fakeApiUsers.find(user => user.id == u)) };
 }
@@ -337,24 +340,10 @@ export async function approveEvent(eventId) {
 
   const event = fakeApiEvents.find(e => e.id === Number(eventId));
 
-  event.status = 3;
+  event.status = 2;
 
   return hydrateEvent(event);
 }
-
-// export async function denyEvent(eventId) {
-//   await delay();
-
-//   const event = fakeApiEvents.find(e => e.id === Number(eventId));
-
-//   if (!event) {
-//     throw new Error("Event not found");
-//   }
-
-//   event.status = -1;
-
-//   return hydrateEvent(event);
-// }
 
 export async function approveEventFacilities(eventId) {
   await delay();

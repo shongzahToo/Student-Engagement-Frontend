@@ -10,7 +10,8 @@ import {
     submitDraft,
     goLive,
     submitFeedback,
-    getFeedbacks
+    getFeedbacks,
+    approveEvent
 } from "../../Tools/MockAPI/FakeAPI";
 import { updateField } from "../../Tools/Updators/Updators";
 import "./EventPage.css";
@@ -99,6 +100,8 @@ function EventPage({ user, events, clubs }) {
         updateFeedbacks();
     }, [id]);
 
+    console.log(event)
+
     if (isLoading) {
         return (
             <div className="event-page-not-found">
@@ -183,7 +186,7 @@ function EventPage({ user, events, clubs }) {
                 </div>
 
                 {user.user && event.status == 3 ? (
-                    <div className="toggle-container">
+                    <div>
                         <label className="switch">
                             <input
                                 type="checkbox"
@@ -232,20 +235,50 @@ function EventPage({ user, events, clubs }) {
                                 </span>
                             ) : null}
 
+
                             {event.status == 1 ? (
-                                <span className="badge">Waiting Approval!</span>
+                                user.user?.type === "admin" ? (
+                                    <span
+                                        className="submit-button"
+                                        onClick={async () => {
+                                            const updatedEvent = await approveEvent(event.id, user.user.id);
+                                            setEvent(updatedEvent);
+                                        }}
+                                    >
+                                        Approve Event
+                                    </span>
+                                ) : (
+                                    <span className="badge">Waiting Approval!</span>
+                                )
                             ) : null}
 
                             {event.status == 2 ? (
-                                <span
-                                    className="submit-button"
-                                    onClick={async () => {
-                                        const updatedEvent = await goLive(id);
-                                        setEvent(updatedEvent);
-                                    }}
-                                >
-                                    Go Live!
-                                </span>
+                                user?.user.type == "admin" ? (
+                                    <span
+                                        className="submit-button"
+                                        onClick={async () => {
+                                            console.log(event.id)
+                                            await goLive(event.id);
+
+                                            setEvent(prev => ({
+                                                ...prev,
+                                                status: 3
+                                            }));
+
+                                            events.setEvents(prev =>
+                                                prev.map(e =>
+                                                    e.id == event.id ? { ...e, status: 3 } : e
+                                                )
+                                            );
+
+                                            navigate(`/admin`);
+                                        }}
+                                    >
+                                        Go Live!
+                                    </span>
+                                ) : (
+                                    <span className="badge">Awaiting approval</span>
+                                )
                             ) : null}
 
                             {event.status == 3 ? (

@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { createEvent, getClubById } from "../../Tools/MockAPI/FakeAPI.jsx";
+import { createEvent, getClubById, getEvents } from "../../Tools/MockAPI/FakeAPI.jsx";
+import { updateField } from "../../Tools/Updators/Updators.jsx";
 import "./CreateEvent.css";
 
 function CreateEvent({ user, events }) {
@@ -11,8 +12,23 @@ function CreateEvent({ user, events }) {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
+    const [eventsLoading, setEventsLoading] = useState(false);
 
-    const [formData, setFormData] = useState({ name: "", description: "", date: "", time: "", location: "", tag: "social" });
+    const [formData, setFormData] = useState({
+        name: "test",
+        description: "test",
+        date: "1111-11-11",
+        time: "11:11",
+        location: "test",
+        tag: "social",
+        it: true,
+        facilities: false,
+        finance: false
+    });
+
+    useEffect(() => {
+            updateField(events?.events, events?.setEvents, setEventsLoading, getEvents);
+        }, [events, events?.events]);
 
     useEffect(() => {
         async function loadClub() {
@@ -32,11 +48,11 @@ function CreateEvent({ user, events }) {
     const isAdmin = club?.admins?.map(a => a.id).includes(user?.user?.id);
 
     function handleChange(e) {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
 
         setFormData(prev => ({
             ...prev,
-            [name]: value
+            [name]: type === "checkbox" ? checked : value
         }));
     }
 
@@ -58,14 +74,21 @@ function CreateEvent({ user, events }) {
 
         const newDate = new Date(`${formData.date}T${formData.time}:00`);
         try {
-            const newEvent = await createEvent({
+            const newEvent = {
                 name: formData.name,
                 dateTime: newDate,
                 location: formData.location,
                 club: club.name,
                 clubId: club.id,
-                users: []
-            });
+                tag: formData.tag,
+                it: Number(formData.it),
+                facilities: Number(formData.facilities),
+                finance: Number(formData.finance),
+                users: [],
+                id: events.events.length + 1
+            };
+
+            await createEvent(newEvent);
 
             if (events?.setEvents) {
                 events.setEvents(prev => [...(prev ?? []), newEvent]);
@@ -201,6 +224,23 @@ function CreateEvent({ user, events }) {
                             <option value="fun">Fun</option>
                             <option value="chill">Chill</option>
                         </select>
+                    </div>
+
+                    <div className="checkbox-row">
+                        <div className="checkbox-group">
+                            <input type="checkbox" name="it" checked={formData.it} onChange={handleChange} />
+                            <label>IT</label>
+                        </div>
+
+                        <div className="checkbox-group">
+                            <input type="checkbox" name="facilities" checked={formData.facilities} onChange={handleChange} />
+                            <label>Facilities</label>
+                        </div>
+
+                        <div className="checkbox-group">
+                            <input type="checkbox" name="finance" checked={formData.finance} onChange={handleChange} />
+                            <label>Finance</label>
+                        </div>
                     </div>
                 </div>
 

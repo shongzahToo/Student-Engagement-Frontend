@@ -1,6 +1,6 @@
 export let fakeApiUsers = [
   { id: 1, username: "Avery Johnson", points: 1280 },
-  { id: 2, username: "Mia Thompson", points: 1135, type: "admin" },
+  { id: 2, username: "Mia Thompson", points: 1135},
   { id: 3, username: "Noah Williams", points: 1040 },
   { id: 4, username: "Sophia Brown", points: 970 },
   { id: 5, username: "Liam Davis", points: 890 },
@@ -28,7 +28,8 @@ export let fakeApiUsers = [
   { id: 27, username: "Michael Young", points: 160 },
   { id: 28, username: "Avery King", points: 140 },
   { id: 29, username: "William Wright", points: 120 },
-  { id: 30, username: "Ella Scott", points: 100 }
+  { id: 30, username: "Ella Scott", points: 100 },
+  { id: 31, username: "Admin Admin", type: "admin"}
 ];
 
 export let fakeApiEvents = [

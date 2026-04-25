@@ -45,8 +45,7 @@ function ClubPage({ user }) {
 
     async function handleJoin() {
         setActionBusy("self");
-        const updated = await userJoinClub(club.id, currentUser.id);
-        setClub(updated);
+        await userJoinClub(club.id, currentUser.id);
         setActionBusy(null);
     }
 

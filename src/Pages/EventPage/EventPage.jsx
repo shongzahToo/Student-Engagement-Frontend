@@ -117,7 +117,7 @@ function EventPage({ user, events, clubs }) {
     }
 
     const eventClub = isClubLoading ? null : clubs.clubs?.find(c => c.id == event.clubId);
-    const isAdmin = user.user?.type == "admin" || !isClubLoading && eventClub?.admins?.map(a => a.id).includes(user?.user?.id);
+    const isAdmin = (user.user?.type == "admin") || (eventClub?.users?.filter(u => u.admin).map(a => a.id).includes(user?.user?.id));
 
     const eventFeedbacks = feedbacks;
 

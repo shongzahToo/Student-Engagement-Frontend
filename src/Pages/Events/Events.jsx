@@ -119,7 +119,7 @@ function Events({ user, events }) {
                                         <div className={"event-card-badge " + event.tag.toLowerCase()}>
                                             {event.tag}
                                         </div>
-                                        {event?.users?.map(u => u.id).includes(u => u.id == user?.user?.id) ? <div className="event-card-badge rsvped">RSVPed</div>: null}
+                                        {event?.users?.map(u => u.id).includes(user?.user?.id) ? <div className="event-card-badge rsvped">RSVPed</div>: null}
                                     </div>
 
                                     <div className="event-card-body">

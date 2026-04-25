@@ -2,12 +2,14 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import './Navbar.css'
 
-const NAV_LINKS = [
-  {to: '/', label: 'Home'},
-  {to: '/events', label: 'Events'},
-  {to: '/leaderboard', label: 'Leaderboard'},
-  {to: '/clubs', label: 'Clubs'},
+const BASE_NAV_LINKS = [
+  { to: '/', label: 'Home' },
+  { to: '/events', label: 'Events' },
+  { to: '/leaderboard', label: 'Leaderboard' },
+  { to: '/clubs', label: 'Clubs' },
 ]
+
+const ADMIN_LINKS = [{ to: '/admin', label: 'Admin' }]
 
 function getInitials(name = '') {
   return name
@@ -26,30 +28,36 @@ function NavLink({ to, label }) {
   )
 }
 
-function Navbar ({user}) {
+function Navbar ({ user }) {
   const [open, setOpen] = useState(false)
   const close = () => setOpen(false)
+
   const loggedIn = Boolean(user)
+  const isAdmin = user?.type === 'admin'
+  const navLinks = isAdmin ? [...BASE_NAV_LINKS, ...ADMIN_LINKS] : BASE_NAV_LINKS
 
   return (
     <>
       <nav className="nav-root">
         <div className="nav-inner">
           <Link to="/" className="nav-logo">
-            <img src="https://ozarkstech.edu/wp-content/uploads/2025/10/ozarks-tech-wordmark.webp"/>
+            <img src="https://ozarkstech.edu/wp-content/uploads/2025/10/ozarks-tech-wordmark.webp" />
           </Link>
 
           <div className="nav-links">
-            {NAV_LINKS.map(l => <NavLink key={l.to} {...l} />)}
+            {navLinks.map(l => <NavLink key={l.to} {...l} />)}
           </div>
 
           <div className="nav-actions">
             {loggedIn ? (
               <>
-                <div className="points-badge">
-                  <span className="coin">🪙</span>
-                  {user.points} pts
-                </div>
+                {!isAdmin && (
+                  <div className="points-badge">
+                    <span className="coin">🪙</span>
+                    {user.points} pts
+                  </div>
+                )}
+
                 <Link to="/profile" className="profile-btn">
                   <div className="avatar">{getInitials(user.username)}</div>
                   My Profile
@@ -72,17 +80,21 @@ function Navbar ({user}) {
         </div>
 
         <div className={`mobile-menu${open ? ' open' : ''}`}>
-          {NAV_LINKS.map(l => (
+          {navLinks.map(l => (
             <NavLink key={l.to} {...l} />
           ))}
+
           <div className="mobile-actions">
             {loggedIn ? (
               <>
-                <div className="points-badge">
-                  <span className="coin">🪙</span>
-                  {user.points} pts
-                </div>
-                <Link to="/profile" className="profile-btn">
+                {!isAdmin && (
+                  <div className="points-badge">
+                    <span className="coin">🪙</span>
+                    {user.points} pts
+                  </div>
+                )}
+
+                <Link to="/profile" className="profile-btn" onClick={close}>
                   <div className="avatar">{getInitials(user.username)}</div>
                   My Profile
                 </Link>

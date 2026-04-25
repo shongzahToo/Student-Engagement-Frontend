@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Leaderboard.css";
+import { updateField } from "../../Tools/Updators/Updators";
 import { getUsers } from "../../Tools/MockAPI/FakeAPI";
-import { updateField } from "../../Tools/Updators/Updators.jsx";
 
 function Leaderboard({ user, users }) {
     const [loading, setLoading] = useState(false);

@@ -12,7 +12,7 @@ function CreateEvent({ user, events }) {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
 
-    const [formData, setFormData] = useState({name: "", description: "", date: "", time: "", location: "", tag: "social"});
+    const [formData, setFormData] = useState({ name: "", description: "", date: "", time: "", location: "", tag: "social" });
 
     useEffect(() => {
         async function loadClub() {
@@ -56,9 +56,12 @@ function CreateEvent({ user, events }) {
 
         setSaving(true);
 
+        const newDate = new Date(`${formData.date}T${formData.time}:00`);
         try {
             const newEvent = await createEvent({
-                ...formData,
+                name: formData.name,
+                dateTime: newDate,
+                location: formData.location,
                 club: club.name,
                 clubId: club.id,
                 users: []

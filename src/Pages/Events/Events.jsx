@@ -2,18 +2,15 @@ import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { updateField } from "../../Tools/Updators/Updators";
 import { getEvents } from "../../Tools/MockAPI/FakeAPI";
+import formatDate from "../../Tools/FormatDate";
 import "./Events.css";
 
 function formatEvents(events, user) {
-    return events.filter(e => e.stage == 3).map(event => ({
+    return events.filter(e => e.status == 3).map(event => ({
         ...event,
         attendees: event.users.length,
-        rsvped: user.user ? event.users.includes(user.user.id) : false
+        rsvped: user.user ? event.users.some(u => u.id === user.user.id) : false
     }));
-}
-
-function parseEventDate(event) {
-    return new Date(`${event.date}, 2026 ${event.time}`);
 }
 
 function Events({ user, events }) {
@@ -38,7 +35,6 @@ function Events({ user, events }) {
 
     const filteredEvents = useMemo(() => {
         const normalizedSearch = search.toLowerCase().trim();
-
         return formattedEvents
             .filter(event => {
                 const matchesSearch =
@@ -56,8 +52,8 @@ function Events({ user, events }) {
             .sort((a, b) => {
                 if (sortBy === "attendees-desc") return b.attendees - a.attendees;
                 if (sortBy === "attendees-asc") return a.attendees - b.attendees;
-                if (sortBy === "date-asc") return parseEventDate(a) - parseEventDate(b);
-                if (sortBy === "date-desc") return parseEventDate(b) - parseEventDate(a);
+                if (sortBy === "date-asc") return a.dateTime - b.dateTime;
+                if (sortBy === "date-desc") return b.dateTime - a.dateTime;
                 if (sortBy === "name-asc") return a.name.localeCompare(b.name);
                 if (sortBy === "club-asc") return a.club.localeCompare(b.club);
                 return 0;
@@ -147,7 +143,7 @@ function Events({ user, events }) {
 
                                         <div className="event-card-date-label">Date & Time</div>
                                         <div className="event-card-date">
-                                            {event.date} - {event.time}
+                                            {formatDate(event?.dateTime)}
                                         </div>
 
                                         <div className="event-card-divider" />

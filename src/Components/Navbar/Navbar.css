@@ -59,8 +59,7 @@
     font-size: 14px;
     font-weight: 500;
     color: var(--text-muted);
-    background: --pill-hover;
-    transition: background 0.18s, color 0.18s;
+    transition: 0.18s;
     white-space: nowrap;
 }
 
@@ -226,7 +225,7 @@
     justify-content: center;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 950px) {
 
     .nav-links,
     .nav-actions {

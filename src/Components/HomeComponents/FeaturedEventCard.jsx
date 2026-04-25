@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import formatDate from "../../Tools/FormatDate";
 
 function FeaturedEventCard({ event }) {
     return (
@@ -17,7 +18,7 @@ function FeaturedEventCard({ event }) {
 
                     <div className="featured-event-card-date-label">Date & Time</div>
                     <div className="featured-event-card-date">
-                        {event.date} - {event.time}
+                        {formatDate(event.dateTime)}
                     </div>
 
                     <div className="featured-event-card-divider" />

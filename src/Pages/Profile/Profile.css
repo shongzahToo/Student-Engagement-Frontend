@@ -26,6 +26,7 @@
 .profile-info {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1.25rem;
 }
 
@@ -136,6 +137,37 @@
     box-shadow: var(--shadow-card);
 }
 
+.logout {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.75rem 1.15rem;
+    background: var(--color--honors-yellow);
+    color: var(--color--black);
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-card);
+    transition: 0.18s ease;
+}
+
+.logout:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card-hover);
+    background: var(--color--white);
+}
+
+.logout:active {
+    transform: translateY(0);
+}
+
+.logout:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.75);
+    outline-offset: 3px;
+}
+.club-member-admin-actions {
+    transform: translateX(45px);
+}
+
 .profile-page {
     color: var(--color--light-black);
 }
@@ -149,6 +181,23 @@
     margin-bottom: 3px;
     background: var(--color--ozarks-blue);
     color: var(--color--white);
+}
+
+.profile-feedback-flag {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: var(--color--medium-blue);
+    color: var(--color--white);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.profile-feedback-needed {
+    background: var(--color--honors-yellow);
+    color: var(--color--black);
 }
 
 @media (max-width: 900px) {

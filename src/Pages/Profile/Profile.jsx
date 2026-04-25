@@ -1,27 +1,29 @@
 import { useState, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { QRCodeCanvas } from "qrcode.react";
 import { updateField } from "../../Tools/Updators/Updators.jsx";
-import { getClubs, getEvents } from "../../Tools/MockAPI/FakeAPI";
+import formatDate from "../../Tools/FormatDate.jsx";
+import { getClubs, getEvents, getFeedbacks } from "../../Tools/MockAPI/FakeAPI";
 import "./Profile.css";
 
 function Profile({ user = null, events, clubs }) {
+    const navigate = useNavigate();
     const [eventsLoading, setEventsLoading] = useState(events.events === null);
     const [clubsLoading, setClubsLoading] = useState(clubs.clubs === null);
 
     useEffect(() => {
         updateField(events.events, events.setEvents, setEventsLoading, getEvents);
     }, [events, events.events]);
-    
+
     useEffect(() => {
         updateField(clubs.clubs, clubs.setClubs, setClubsLoading, getClubs);
     }, [clubs, clubs.clubs]);
 
-    if (user.user === null) {
+    if (!user?.user) {
         return <Navigate to="/login" />;
     }
 
-    const userEvents = events?.events?.filter(event => event.users.includes(user.user.id));
+    const userEvents = events?.events?.filter(event => event.users.map(u => u.id).includes(user.user.id));
     const userClubs = clubs?.clubs?.filter(club => club.users.map(u => u.id).includes(user.user.id));
 
     return (
@@ -40,6 +42,16 @@ function Profile({ user = null, events, clubs }) {
                                 {user.user.points} pts
                             </div>
                         </div>
+
+                        <button
+                            className="logout"
+                            onClick={() => {
+                                user.setUser(null);
+                                navigate("/");
+                            }}
+                        >
+                            logout
+                        </button>
                     </div>
                 </div>
 
@@ -55,8 +67,33 @@ function Profile({ user = null, events, clubs }) {
                                 <Link to={`/events/${event.id}`} key={event.id} className="profile-event-card">
                                     <div className="profile-event-name">{event.name}</div>
                                     <div className="profile-event-meta">
-                                        {event.date} at {event.time}
+                                        {formatDate(event.dateTime)}
                                     </div>
+                                </Link>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <div className="profile-events">
+                    {eventsLoading ? (
+                        <div className="profile-page">Loading Events...</div>
+                    ) : events.events.filter(e => e.status == 4).length === 0 ? (
+                        <>
+                            <h2>Previous Events</h2>
+                            <p>You have no past events!</p>
+                        </>
+                    ) : (
+                        <div className="profile-event-list">
+                            <h2>Previous Events</h2>
+                            {events.events.filter(e => e.status == 4).map(event => (
+                                <Link to={`/events/${event.id}`} key={event.id} className="profile-event-card">
+                                    <div className="profile-event-name">{event.name}</div>
+                                    <div className="profile-event-meta">
+                                        {formatDate(event.dateTime)}
+                                    </div>
+
+                                    <FeedbackStatus eventId={event.id} userId={user.user.id} />
                                 </Link>
                             ))}
                         </div>
@@ -86,6 +123,43 @@ function Profile({ user = null, events, clubs }) {
                 <h2>show the club this to check in!</h2>
                 <QRCodeCanvas value={String(user.user.id)} size={180} level="M" />
             </div>
+        </div>
+    );
+}
+
+function FeedbackStatus({ eventId, userId }) {
+    const [feedbacks, setFeedbacks] = useState(null);
+
+    useEffect(() => {
+        let active = true;
+
+        async function loadFeedbacks() {
+            const data = await getFeedbacks(eventId);
+            if (active) {
+                setFeedbacks(data);
+            }
+        }
+
+        loadFeedbacks();
+
+        return () => {
+            active = false;
+        };
+    }, [eventId]);
+
+    if (feedbacks === null) {
+        return <div className="profile-feedback-flag">Loading feedback...</div>;
+    }
+
+    const hasGivenFeedback = feedbacks.some(
+        feedback => feedback.userId == userId
+    );
+
+    return hasGivenFeedback ? (
+        <div className="profile-feedback-flag">Feedback given</div>
+    ) : (
+        <div className="profile-feedback-flag profile-feedback-needed">
+            Feedback needed
         </div>
     );
 }

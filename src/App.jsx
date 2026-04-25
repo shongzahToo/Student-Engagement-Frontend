@@ -14,9 +14,10 @@ import Clubs from "./Pages/Clubs/Clubs.jsx";
 import ClubPage from "./Pages/ClubPage/ClubPage.jsx";
 import CreateEvent from "./Pages/CreateEvent/CreateEvent.jsx";
 import ScanUsers from "./Pages/ScanUsers/ScanUsers.jsx";
+import Admin from "./Pages/Admin/Admin.jsx";
 
 function App() {
-  const [user, setUser] = useState({ id: 1, username: "Avery Johnson", points: 1280 });
+  const [user, setUser] = useState({ id: 1, username: "Avery Johnson", points: 1280, type: "admin" });
   const [events, setEvents] = useState(null);
   const [users, setUsers] = useState(null);
   const [clubs, setClubs] = useState(null);
@@ -39,6 +40,7 @@ function App() {
         <Route path="/clubs" element={<Clubs clubs={clubsPassObject} user={userPassObject} />} />
         <Route path="/clubs/:id" element={ <ClubPage user={userPassObject} clubs={clubsPassObject} /> } />
         <Route path="/clubs/:id/create-event" element={ <CreateEvent user={userPassObject} clubs={clubsPassObject} /> } />
+        <Route path="/admin" element={<Admin events={eventsPassObject} clubs={clubsPassObject} users={usersPassObject} />} />
       </Routes>
     </>
   );

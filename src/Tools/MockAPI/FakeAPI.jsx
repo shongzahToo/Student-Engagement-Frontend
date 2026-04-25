@@ -175,8 +175,15 @@ export async function goLive(eventId) {
   if (!event) return null;
 
   event.status = 3;
+}
 
-  return { ...event, users: event.users.map(u => fakeApiUsers.find(user => user.id == u)) };
+export async function endEvent(eventId) {
+  await delay();
+  const event = fakeApiEvents.find(e => e.id == eventId);
+
+  if (!event) return null;
+
+  event.status = 4;
 }
 
 export async function checkUserIn(eventId, userId) {

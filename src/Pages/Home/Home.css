@@ -58,7 +58,6 @@
     max-width: 400px;
 }
 
-/* Featured Event Card */
 .featured-event-card {
     width: 300px;
     background: var(--color--white);
@@ -130,7 +129,6 @@
     color: var(--color--honors-yellow);
 }
 
-/* Events Section */
 .events-section {
     padding: 4rem 6rem;
     background: var(--color--light-silver);
@@ -147,7 +145,6 @@
     color: inherit;
 }
 
-/* Event Card */
 .event-card {
     padding: 15px;
     background: var(--color--white);
@@ -236,7 +233,6 @@
     text-align: center;
 }
 
-/* card badges */
 .event-card-badge {
     font-size: 0.7rem;
     font-weight: 700;
@@ -274,7 +270,6 @@
   color: var(--color--white);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .hero {
         flex-direction: column;

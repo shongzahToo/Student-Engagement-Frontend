@@ -106,7 +106,6 @@
     cursor: pointer;
 }
 
-/* Container and Slider Styling */
 .switch { 
     position: relative; 
     display: inline-block; 
@@ -151,7 +150,6 @@
   border-radius: 50%;
 }
 
-/* Checked State Styles */
 input:checked + .slider { background-color: var(--color--ozarks-blue); }
 input:checked + .slider:before { transform: translateX(26px); }
 
@@ -160,7 +158,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     text-align: center;
 }
 
-/* Admin Panel */
 .admin-event-panel {
     margin: 2rem 0 0;
     padding: 1.5rem;
@@ -222,7 +219,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     text-decoration: none !important;
 }
 
-/* RSVP List — styled like Leaderboard rows */
 .rsvp-list {
     list-style: none;
     background: var(--color--white);
@@ -244,7 +240,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     border-bottom: none;
 }
 
-/* Override the grid to: avatar | name | points */
 .rsvp-row {
     grid-template-columns: 38px 1fr 120px;
 }
@@ -283,7 +278,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     font-size: 1rem;
 }
 
-/* ─── Feedback Section ───────────────────────────────────────────── */
 
 .feedback-section {
     margin-top: 2rem;
@@ -293,7 +287,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     box-shadow: var(--shadow-card);
 }
 
-/* Inside admin panel, override background to white-on-silver */
 .admin-event-panel .feedback-section {
     margin-top: 1.5rem;
     background: var(--color--white);
@@ -344,7 +337,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     margin: 0;
 }
 
-/* Feedback list (admin view) */
 .feedback-list {
     list-style: none;
     display: flex;
@@ -387,7 +379,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     border-left: 3px solid var(--color--silver);
 }
 
-/* Star rating */
 .star-rating {
     display: flex;
     align-items: center;
@@ -430,7 +421,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     font-size: 0.85em;
 }
 
-/* Feedback form (user view) */
 .feedback-prompt {
     font-size: 1rem;
     font-weight: 600;
@@ -506,7 +496,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     cursor: not-allowed;
 }
 
-/* Already-submitted view */
 .feedback-submitted {
     display: flex;
     flex-direction: column;
@@ -540,7 +529,6 @@ input:checked + .slider:before { transform: translateX(26px); }
     padding-left: 0.75rem;
 }
 
-/* ─── Responsive ─────────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
     .event-page {

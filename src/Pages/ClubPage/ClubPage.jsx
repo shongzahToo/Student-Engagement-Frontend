@@ -166,7 +166,6 @@ function ClubPage({ user }) {
                 )}
             </div>
 
-            {/* ── Admin: Pending Join Requests ── */}
             {isAdmin && pendingRequests.length > 0 && (
                 <div className="club-section">
                     <h2 className="club-section-heading">
@@ -209,7 +208,6 @@ function ClubPage({ user }) {
                 </div>
             )}
 
-            {/* ── Members list (visible to members only) ── */}
             {isMember ? (
                 <div className="club-section">
                     <div className="club-members-header">
@@ -268,7 +266,6 @@ function ClubPage({ user }) {
                                         {member.points || 0} pts
                                     </div>
 
-                                    {/* Admin controls — only shown to admins, not on their own row */}
                                     {isAdmin && !isCurrentUser && (
                                         <div className="club-member-admin-actions">
                                             {memberIsAdmin ? (
@@ -298,7 +295,6 @@ function ClubPage({ user }) {
                                         </div>
                                     )}
 
-                                    {/* Spacer so non-admin rows still align in the grid */}
                                     {isAdmin && isCurrentUser && (
                                         <div className="club-member-admin-actions" />
                                     )}
@@ -313,7 +309,6 @@ function ClubPage({ user }) {
                 </p>
             )}
 
-            {/* ── Events ── */}
             <div className="club-section">
                 <div className="events-header-section">
                     <h2>Hosted Events</h2>

@@ -59,16 +59,6 @@ function Admin({ events, clubs, users }) {
         );
     }
 
-    // async function handleDenyEvent(eventId) {
-    //     const updatedEvent = await denyEvent(eventId);
-
-    //     events.seteEVents(prev =>
-    //         prev.map(event =>
-    //             event.id === eventId ? updatedEvent : event
-    //         )
-    //     );
-    // }
-
     const filteredEvents = useMemo(() => {
         return events.events?.filter(event => {
             const searchValue = eventSearch.toLowerCase();
@@ -247,13 +237,6 @@ function Admin({ events, clubs, users }) {
                                                         >
                                                             Approve
                                                         </button>
-
-                                                        {/* <button
-                                                            className="admin-action deny"
-                                                            onClick={() => handleDenyEvent(event.id)}
-                                                        >
-                                                            Deny
-                                                        </button> */}
                                                     </div>
                                                 ) : (
                                                     <span className="admin-muted-text">No action</span>

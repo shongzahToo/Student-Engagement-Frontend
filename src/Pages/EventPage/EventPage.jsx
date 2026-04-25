@@ -11,7 +11,8 @@ import {
     goLive,
     submitFeedback,
     getFeedbacks,
-    approveEvent
+    approveEvent,
+    endEvent
 } from "../../Tools/MockAPI/FakeAPI";
 import { updateField } from "../../Tools/Updators/Updators";
 import "./EventPage.css";
@@ -282,7 +283,25 @@ function EventPage({ user, events, clubs }) {
                             ) : null}
 
                             {event.status == 3 ? (
-                                <span className="status-badge">Live!</span>
+                                <span
+                                    className="submit-button"
+                                    onClick={async () => {
+                                        await endEvent(event.id);
+
+                                        setEvent(prev => ({
+                                            ...prev,
+                                            status: 4
+                                        }));
+
+                                        events.setEvents(prev =>
+                                            prev.map(e =>
+                                                e.id == event.id ? { ...e, status: 4 } : e
+                                            )
+                                        );
+                                    }}
+                                >
+                                    End Event
+                                </span>
                             ) : null}
 
                             <Link to={`/events/${id}/scan`} className="scan-link-button">
